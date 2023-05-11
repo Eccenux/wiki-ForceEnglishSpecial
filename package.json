@@ -1,7 +1,7 @@
 {
-  "name": "wiki-ForceEnglishSpecial",
+  "name": "wiki-force-english-special",
   "version": "1.0.0",
-  "description": "Wiki Pending Changes Helper",
+  "description": "Forces English names of Special pages.",
   "main": "ForceEnglishSpecial.user.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
