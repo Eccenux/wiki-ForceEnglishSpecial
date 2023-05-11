@@ -16,13 +16,35 @@
 // -------------------------------------------------------------------
 function initGadget(mw) {
 	const g = new FesGadget(mw);
-	g.prepareTitle();
+	g.init();
 }
 
 var FesGadget = class {
 
 	constructor(mw) {
 		this.mw = mw;
+	}
+
+	/** Run all. */
+	init() {
+		const data = this.prepareTitle();
+		if (data === false) {
+			return;
+		}
+		this.replaceUrl(data);
+	}
+
+	/** Replace in URL. */
+	replaceUrl(data) {
+		const url = new URL(location.href);
+		// ?title=...
+		if (url.searchParams.has('title')) {
+			url.searchParams.set('title', data.en);
+		} else {
+			let full = mw.config.get('wgPageName');
+			url.pathname = url.pathname.replace(full, data.en);
+		}
+		window.history.replaceState(null, null, url.href);
 	}
 
 	/** Add English title. */
@@ -44,7 +66,8 @@ var FesGadget = class {
 		`;
 		document.querySelector('h1').innerHTML = `<div style="${style}"><div>${local}</div> <div style="font-size:80%">${en}</div></div>`;
 		return {en, local};
-	}
+  }
+
 }
 
 // -------------------------------------------------------------------
