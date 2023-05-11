@@ -1,0 +1,22 @@
+{
+  "name": "wiki-ForceEnglishSpecial",
+  "version": "1.0.0",
+  "description": "Wiki Pending Changes Helper",
+  "main": "ForceEnglishSpecial.user.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Eccenux/wiki-ForceEnglishSpecial.git"
+  },
+  "author": "Maciej Nux Jaros",
+  "license": "SEE LICENSE IN README.md",
+  "bugs": {
+    "url": "https://github.com/Eccenux/wiki-ForceEnglishSpecial/issues"
+  },
+  "homepage": "https://github.com/Eccenux/wiki-ForceEnglishSpecial#readme",
+  "devDependencies": {
+    "eslint": "8.1.0"
+  }
+}
