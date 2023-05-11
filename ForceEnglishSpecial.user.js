@@ -31,11 +31,13 @@ var FesGadget = class {
 		if (data === false) {
 			return;
 		}
-		this.replaceUrl(data);
+		//this.replaceUrl(data);
+		const url = this.canonicalUrl(data);
+		console.log(url.href);
 	}
 
-	/** Replace in URL. */
-	replaceUrl(data) {
+	/** Get canonical URL. */
+	canonicalUrl(data) {
 		const url = new URL(location.href);
 		// ?title=...
 		if (url.searchParams.has('title')) {
@@ -44,7 +46,13 @@ var FesGadget = class {
 			let full = mw.config.get('wgPageName');
 			url.pathname = url.pathname.replace(full, data.en);
 		}
+		return url;
+	}
+	/** Replace in URL. */
+	replaceUrl(data) {
+		const url = this.canonicalUrl(data);
 		window.history.replaceState(null, null, url.href);
+		return url;
 	}
 
 	/** Add English title. */
@@ -64,10 +72,30 @@ var FesGadget = class {
 			align-items: baseline;
 			justify-content: space-between;
 		`;
-		document.querySelector('h1').innerHTML = `<div style="${style}"><div>${local}</div> <div style="font-size:80%">${en}</div></div>`;
-		return {en, local};
-  }
-
+		document.querySelector('h1').innerHTML = `
+			<div style="${style}">
+				<div>${local}</div>
+				<div style="font-size:80%; cursor: pointer;" tabindex="0" role="button">${en}</div>
+			</div>
+		`;
+		const data = {en, local};
+		const btn = document.querySelector('h1 [role="button"]');
+		this.prepareCanonical(btn, data);
+		return data;
+	}
+	
+	/**
+	 * Prepare canonical URL replacement.
+	 * 
+	 * @param {Element} btn Button to prepare.
+	 * @param {Object} data 
+	 */
+	prepareCanonical(btn, data) {
+		btn.addEventListener('click', ()=>{
+			const url = this.replaceUrl(data);
+			console.log(url.href);
+		});
+	}
 }
 
 // -------------------------------------------------------------------
