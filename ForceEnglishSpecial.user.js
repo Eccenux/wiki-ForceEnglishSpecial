@@ -73,13 +73,13 @@ var FesGadget = class {
 			justify-content: space-between;
 		`;
 		document.querySelector('h1').innerHTML = `
-			<div style="${style}">
+			<div style="${style}" class="fes">
 				<div>${local}</div>
-				<div style="font-size:80%; cursor: pointer;" tabindex="0" role="button">${en}</div>
+				<div style="font-size:80%; cursor: pointer;" tabindex="0" role="button" class="canon">${en}</div>
 			</div>
 		`;
 		const data = {en, local};
-		const btn = document.querySelector('h1 [role="button"]');
+		const btn = document.querySelector('h1 .fes .canon');
 		this.prepareCanonical(btn, data);
 		return data;
 	}
@@ -92,8 +92,13 @@ var FesGadget = class {
 	 */
 	prepareCanonical(btn, data) {
 		btn.addEventListener('click', ()=>{
+			// avoid repeating
+			if (this._lastUrl && this._lastUrl === location.href) {
+				return;
+			}
 			const url = this.replaceUrl(data);
 			console.log(url.href);
+			this._lastUrl = url.href;
 		});
 	}
 }
