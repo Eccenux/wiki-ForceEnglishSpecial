@@ -1,7 +1,7 @@
 ﻿// ==UserScript==
 // @name         Wiki: Force English Special
 // @namespace    pl.enux.wiki
-// @version      1.0.1
+// @version      1.1.0
 // @description  Forces English names of Special pages.
 // @author       Nux
 // @match        https://*.wikipedia.org/*
@@ -32,8 +32,8 @@ var FesGadget = class {
 			return;
 		}
 		//this.replaceUrl(data);
-		const url = this.canonicalUrl(data);
-		console.log(url.href);
+		// const url = this.canonicalUrl(data);
+		// console.log(url.href);
 	}
 
 	/** Get canonical URL. */
@@ -112,7 +112,7 @@ var FesGadget = class {
 				return;
 			}
 			const url = this.replaceUrl(data);
-			console.log(url.href);
+			// console.log(url.href);
 			this._lastUrl = url.href;
 		});
 	}
