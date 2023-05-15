@@ -59,13 +59,17 @@ var FesGadget = class {
 	prepareTitle() {
 		const mw = this.mw;
 
+		if (!this.initialTitle) {
+			this.initialTitle = document.querySelector('h1').textContent;
+		}
+		
 		let ns = mw.config.get('wgCanonicalNamespace');
 		if (ns !== 'Special') {
 			return false;
 		}
 		let p = mw.config.get('wgCanonicalSpecialPageName');
 		let en = `${ns}:${p}`;
-		let local = mw.config.get('wgTitle'); // mw.config.get('wgPageName');
+		let local = this.initialTitle;
 		let style = `
 			display:flex;
 			gap:1em;
@@ -78,7 +82,7 @@ var FesGadget = class {
 				<div style="font-size:80%; cursor: pointer;" tabindex="0" role="button" class="canon">${en}</div>
 			</div>
 		`;
-		const data = {en, local};
+		const data = {en};
 		const btn = document.querySelector('h1 .fes .canon');
 		this.prepareCanonical(btn, data);
 		return data;
