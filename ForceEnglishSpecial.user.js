@@ -39,12 +39,23 @@ var FesGadget = class {
 	/** Get canonical URL. */
 	canonicalUrl(data) {
 		const url = new URL(location.href);
+		const before = url.href;
+		let action = '';
 		// ?title=...
 		if (url.searchParams.has('title')) {
 			url.searchParams.set('title', data.en);
+			action = 'title param';
 		} else {
-			let full = mw.config.get('wgPageName');
-			url.pathname = url.pathname.replace(full, data.en);
+			// let full = mw.config.get('wgPageName');
+			// url.pathname = url.pathname.replace(full, data.en);
+			const localNs = mw.config.get('wgFormattedNamespaces')[-1];
+			const re = new RegExp(`${localNs}:[^/:]+`);
+			url.pathname = url.pathname.replace(re, data.en);
+			action = 'replace pathname';
+		}
+		// re-check
+		if (before === url.href) {
+			console.warn('[FesGadget]', 'url was not modified', {action, url});
 		}
 		return url;
 	}
