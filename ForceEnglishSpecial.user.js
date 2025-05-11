@@ -1,7 +1,7 @@
 ﻿// ==UserScript==
 // @name         Wiki: Force English Special
 // @namespace    pl.enux.wiki
-// @version      1.1.0
+// @version      1.1.1
 // @description  Forces English names of Special pages.
 // @author       Nux
 // @match        https://*.wikipedia.org/*
@@ -31,9 +31,6 @@ var FesGadget = class {
 		if (data === false) {
 			return;
 		}
-		//this.replaceUrl(data);
-		// const url = this.canonicalUrl(data);
-		// console.log(url.href);
 	}
 
 	/** Get canonical URL. */
@@ -57,12 +54,14 @@ var FesGadget = class {
 		if (before === url.href) {
 			console.warn('[FesGadget]', 'url was not modified', {action, url});
 		}
-		return url;
+		// render and fix colon
+		let result = url.href.toString().replace('Special%3A', 'Special:');
+		return result;
 	}
 	/** Replace in URL. */
 	replaceUrl(data) {
 		const url = this.canonicalUrl(data);
-		window.history.replaceState(null, null, url.href);
+		window.history.replaceState(null, null, url);
 		return url;
 	}
 
@@ -112,8 +111,8 @@ var FesGadget = class {
 				return;
 			}
 			const url = this.replaceUrl(data);
-			// console.log(url.href);
-			this._lastUrl = url.href;
+			// console.log(url);
+			this._lastUrl = url;
 		});
 	}
 }
